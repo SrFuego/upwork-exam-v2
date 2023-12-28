@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  app:
+    container_name: fastapi
+    build:
+      context: ../.
+      dockerfile: dockerfiles/Dockerfile.develop
+    restart: always
+    ports:
+      - 8000:8000
+    volumes:
+      - "$PWD:/entryExam"
+    env_file:
+      - ../.env
+    networks:
+      - net
+
+networks:
+  net:

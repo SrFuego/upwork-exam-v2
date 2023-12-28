@@ -10,12 +10,12 @@ Working FastAPI API with a User and Profile models and schemas.
 4. Deliver a GitHub repository with your solution (it can be private, just give access to @arielaco)
 
 ## Tasks
-- [ ] Create a [User](###User) and [Profile](###Profile) models and schemas 
-- [ ] Develop a REST API exposing CRUD endpoints for both models
-- [ ] Test at least 2 endpoints using pytest (with fixtures)
-- [ ] Point docs to root path
-- [ ] Create requirements file
-- [ ] Add a section on `README.md` with setup (venv), install (pip), run and testing instructions
+- [x] Create a [User](###User) and [Profile](###Profile) models and schemas 
+- [x] Develop a REST API exposing CRUD endpoints for both models
+- [x] Test at least 2 endpoints using pytest (with fixtures)
+- [x] Point docs to root path
+- [x] Create requirements file
+- [x] Add a section on `README.md` with setup (venv), install (pip), run and testing instructions
 
 ### User
 - Email as username
@@ -33,3 +33,47 @@ Working FastAPI API with a User and Profile models and schemas.
 - Implement proper folder structure
 - Validation must be done using Pydantic
 - Use multiple commits (when possible, use conventional commit messages)
+
+## Index of commands:
+
+- [Index of commands:](#index-of-commands)
+  - [Run the project](#run-the-project)
+  - [Connect to the API container](#connect-to-the-api-container)
+  - [Generate updated dependencies](#generate-updated-dependencies)
+
+### Run the project
+
+You must have Docker installed:
+
+https://docs.docker.com/engine/install/
+
+Set up the development environment:
+
+`docker compose -f dockerfiles/docker-compose.yml up --build`
+
+
+### Connect to the API container
+
+`docker exec -it fastapi bash`
+
+
+### Generate updated dependencies
+
+In the container:
+
+`bash scripts/update_requirements.sh`
+
+
+### Generate BPMN diagram
+
+Paste code from `docs/app.tree` to
+
+https://www.bpmn-sketch-miner.ai/
+
+
+### Generate coverage report
+
+In the container:
+
+`coverage run -m pytest`
+`coverage html`

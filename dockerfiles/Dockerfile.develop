@@ -1,0 +1,36 @@
+# syntax=docker/dockerfile:1
+
+# Comments are provided throughout this file to help you get started.
+# If you need more help, visit the Dockerfile reference guide at
+# https://docs.docker.com/engine/reference/builder/
+
+FROM python:3.10-bookworm as base
+
+ARG WORK_DIR="/entryExam"
+ARG REQUIREMENTS_FILE="20231225.develop"
+
+# Prevents Python from writing pyc files.
+ENV PYTHONDONTWRITEBYTECODE=1
+
+# Keeps Python from buffering stdout and stderr to avoid situations where
+# the application crashes without emitting any logs due to buffering.
+ENV PYTHONUNBUFFERED=1
+
+WORKDIR ${WORK_DIR}
+
+COPY ../requirements/${REQUIREMENTS_FILE} ${REQUIREMENTS_FILE}
+
+RUN apt update && \
+    apt-get install -y --no-install-recommends \
+    git python3-dev build-essential && \
+    pip install --upgrade pip && \
+    pip install --no-cache-dir -r ${REQUIREMENTS_FILE} && \
+    apt-get autoremove -y && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+COPY . ${WORK_DIR}
+
+EXPOSE 8000
+
+CMD ["uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
